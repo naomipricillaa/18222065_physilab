@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-5e*go*0y31w=rrdu*(j9a3wk!6+t5k9e98ad@-fh&*vu8+#)ib
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
 
 CSRF_COOKIE_SECURE = False
 
@@ -42,24 +42,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'users',
+    'django.contrib.staticfiles',
 ]
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+ROOT_URLCONF = 'physilab.urls'
+
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'physilab.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True  # For development only
 CORS_ALLOW_CREDENTIALS = True
@@ -80,7 +85,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'physilab.wsgi.application'
+WSGI_APPLICATION = 'physilab.wsgi.app'
 
 
 # Database
@@ -131,10 +136,16 @@ USE_TZ = True
 LOGIN_URL = 'login'
 
 STATIC_URL = '/static/'
-static_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+static_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Optional: Additional static files directories
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 static_STORAGE = 'whitenoise.storage.CompressedManifeststaticStorage'
 
 # Default primary key field type
