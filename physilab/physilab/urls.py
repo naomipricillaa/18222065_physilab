@@ -6,6 +6,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),  # Include the users app's URLs
-    path('', index_page.as_view(), name='index'),
+    path('', index_page, name='index'),
     path('landing/', landing_page, name='landing')
 ]
